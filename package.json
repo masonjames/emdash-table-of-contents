@@ -1,6 +1,6 @@
 {
 	"name": "@masonjames/emdash-table-of-contents",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "A delightful heading-driven table of contents plugin for EmDash CMS",
 	"type": "module",
 	"main": "src/index.ts",
