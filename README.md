@@ -16,17 +16,18 @@ It gives editors an explicit Portable Text block for in-article placement and gi
 
 ## Installation
 
+Install the package from npm:
+
 ```bash
-npm install @emdash-cms/plugin-table-of-contents
+npm install @masonjames/emdash-table-of-contents
 ```
 
-Then enable it in your EmDash site:
+Then register it as a trusted EmDash plugin in `astro.config.mjs`:
 
 ```ts
-// astro.config.mjs
 import { defineConfig } from "astro/config";
 import { emdash } from "emdash/astro";
-import { tableOfContentsPlugin } from "@emdash-cms/plugin-table-of-contents";
+import { tableOfContentsPlugin } from "@masonjames/emdash-table-of-contents";
 
 export default defineConfig({
 	integrations: [
@@ -36,6 +37,8 @@ export default defineConfig({
 	],
 });
 ```
+
+This is the official installation path for this package today.
 
 ## Usage
 
@@ -57,7 +60,7 @@ You can also render the same TOC behavior directly from a theme:
 
 ```astro
 ---
-import { TableOfContents } from "@emdash-cms/plugin-table-of-contents/astro";
+import { TableOfContents } from "@masonjames/emdash-table-of-contents/astro";
 ---
 
 <aside class="article-rail">
@@ -97,18 +100,11 @@ Current EmDash plugin APIs do not expose `admin.settingsSchema` values directly 
 
 That route returns only non-sensitive display settings.
 
-### Marketplace compatibility
+### Marketplace and `emdash plugin publish`
 
-Because it relies on native plugin rendering surfaces, this package is **npm-publishable** but not a current EmDash marketplace bundle candidate.
+`emdash plugin publish` targets sandboxed marketplace bundles. EmDash currently rejects plugins that declare `admin.portableTextBlocks` for marketplace bundling, and sandboxed plugins cannot ship `componentsEntry` Astro components for site rendering.
 
-## Design goals
-
-This plugin is intentionally:
-
-- **explicit**, not globally injected
-- **DOM-aware**, not a global HTML content filter
-- **theme-friendly**, not tied to one layout
-- **lightweight**, not scrollspy-heavy in v1
+That means this plugin is currently **officially distributed as a trusted npm package**, not as an EmDash Marketplace package.
 
 ## Development
 
@@ -120,15 +116,24 @@ pnpm typecheck
 
 ## Releasing
 
-This repo ships with GitHub Actions for release automation:
+This repo is configured for npm trusted publishing from GitHub Actions.
 
-1. bump `package.json` to the new version
+### Bootstrap the package once
+
+For the very first publish, create the package on npm manually, then attach the GitHub workflow as the trusted publisher:
+
+```bash
+npm publish --access public
+npm trust github @masonjames/emdash-table-of-contents --repo masonjames/emdash-table-of-contents --file publish.yml --yes
+```
+
+### Ongoing releases
+
+1. bump `package.json` and `src/types.ts` to the new version
 2. run `pnpm check`
 3. merge the release commit to `main`
-4. create and push a matching stable tag such as `v0.1.1` from that `main` commit
-5. GitHub Actions creates the GitHub Release and publishes the package to npm
-
-The npm publish workflow expects an `NPM_TOKEN` repository secret with CI-safe publish access to the `@emdash-cms` scope.
+4. create and push a matching stable tag such as `v0.1.1`
+5. GitHub Actions creates the GitHub Release and publishes to npm via OIDC trusted publishing
 
 ## License
 

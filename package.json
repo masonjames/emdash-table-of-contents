@@ -1,5 +1,5 @@
 {
-	"name": "@emdash-cms/plugin-table-of-contents",
+	"name": "@masonjames/emdash-table-of-contents",
 	"version": "0.1.0",
 	"description": "A delightful heading-driven table of contents plugin for EmDash CMS",
 	"type": "module",
@@ -34,7 +34,8 @@
 	},
 	"homepage": "https://github.com/masonjames/emdash-table-of-contents#readme",
 	"publishConfig": {
-		"access": "public"
+		"access": "public",
+		"provenance": true
 	},
 	"peerDependencies": {
 		"astro": ">=6.0.0-beta.0",
@@ -46,6 +47,7 @@
 		"astro": "^6.0.0-beta.0",
 		"emdash": "^0.1.0",
 		"jsdom": "^26.1.0",
+		"tsdown": "^0.21.7",
 		"typescript": "6.0.0-beta",
 		"vitest": "^3.2.4"
 	},

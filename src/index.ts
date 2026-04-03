@@ -1,5 +1,7 @@
 import type { PluginDescriptor } from "emdash";
 
+export { createPlugin } from "./plugin.js";
+
 import {
 	TABLE_OF_CONTENTS_PACKAGE_NAME,
 	TABLE_OF_CONTENTS_PLUGIN_ID,
