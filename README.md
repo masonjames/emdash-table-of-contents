@@ -118,7 +118,18 @@ pnpm test
 pnpm typecheck
 ```
 
+## Releasing
+
+This repo ships with GitHub Actions for release automation:
+
+1. bump `package.json` to the new version
+2. run `pnpm check`
+3. merge the release commit to `main`
+4. create and push a matching stable tag such as `v0.1.1` from that `main` commit
+5. GitHub Actions creates the GitHub Release and publishes the package to npm
+
+The npm publish workflow expects an `NPM_TOKEN` repository secret with CI-safe publish access to the `@emdash-cms` scope.
+
 ## License
 
 MIT
-
