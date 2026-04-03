@@ -116,16 +116,18 @@ pnpm typecheck
 
 ## Releasing
 
-This repo is configured for npm trusted publishing from GitHub Actions.
+This repo is configured with an OIDC-ready GitHub Actions publish workflow.
 
 ### Bootstrap the package once
 
 For the very first publish, create the package on npm manually, then attach the GitHub workflow as the trusted publisher:
 
 ```bash
-npm publish --access public
+npm publish --access public --provenance=false
 npm trust github @masonjames/emdash-table-of-contents --repo masonjames/emdash-table-of-contents --file publish.yml --yes
 ```
+
+If your current npm credential cannot manage trust relationships, keep `NPM_TOKEN` configured in GitHub until you attach the trusted publisher from a full npm account session.
 
 ### Ongoing releases
 
