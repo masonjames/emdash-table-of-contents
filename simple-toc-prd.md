@@ -4,7 +4,7 @@ status: draft
 priority: P1
 inspired_by: "SimpleTOC"
 plugin_id: "table-of-contents"
-package_name: "@masonjames/emdash-table-of-contents"
+package_name: "emdash-table-of-contents"
 execution_mode: "Trusted-first, sandbox-compatible target"
 ---
 

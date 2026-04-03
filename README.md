@@ -19,7 +19,7 @@ It gives editors an explicit Portable Text block for in-article placement and gi
 Install the package from npm:
 
 ```bash
-npm install @masonjames/emdash-table-of-contents
+npm install emdash-table-of-contents
 ```
 
 Then register it as a trusted EmDash plugin in `astro.config.mjs`:
@@ -27,7 +27,7 @@ Then register it as a trusted EmDash plugin in `astro.config.mjs`:
 ```ts
 import { defineConfig } from "astro/config";
 import { emdash } from "emdash/astro";
-import { tableOfContentsPlugin } from "@masonjames/emdash-table-of-contents";
+import { tableOfContentsPlugin } from "emdash-table-of-contents";
 
 export default defineConfig({
 	integrations: [
@@ -60,7 +60,7 @@ You can also render the same TOC behavior directly from a theme:
 
 ```astro
 ---
-import { TableOfContents } from "@masonjames/emdash-table-of-contents/astro";
+import { TableOfContents } from "emdash-table-of-contents/astro";
 ---
 
 <aside class="article-rail">
@@ -124,7 +124,7 @@ For the very first publish, create the package on npm manually, then attach the 
 
 ```bash
 npm publish --access public --provenance=false
-npm trust github @masonjames/emdash-table-of-contents --repo masonjames/emdash-table-of-contents --file publish.yml --yes
+npm trust github emdash-table-of-contents --repo masonjames/emdash-table-of-contents --file publish.yml --yes
 ```
 
 If your current npm credential cannot manage trust relationships, keep `NPM_TOKEN` configured in GitHub until you attach the trusted publisher from a full npm account session.

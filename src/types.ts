@@ -1,6 +1,6 @@
 export const TABLE_OF_CONTENTS_PLUGIN_ID = "table-of-contents";
-export const TABLE_OF_CONTENTS_PACKAGE_NAME = "@masonjames/emdash-table-of-contents";
-export const TABLE_OF_CONTENTS_VERSION = "0.1.2";
+export const TABLE_OF_CONTENTS_PACKAGE_NAME = "emdash-table-of-contents";
+export const TABLE_OF_CONTENTS_VERSION = "0.1.3";
 export const PUBLIC_CONFIG_ROUTE = "public-config";
 export const PUBLIC_CONFIG_PATH = `/_emdash/api/plugins/${TABLE_OF_CONTENTS_PLUGIN_ID}/${PUBLIC_CONFIG_ROUTE}`;
 
