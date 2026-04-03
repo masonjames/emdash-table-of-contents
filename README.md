@@ -116,26 +116,29 @@ pnpm typecheck
 
 ## Releasing
 
-This repo is configured with an OIDC-ready GitHub Actions publish workflow.
+The unscoped `emdash-table-of-contents` package is already live on npm, and the current GitHub Actions release path has been verified end-to-end.
 
-### Bootstrap the package once
-
-For the very first publish, create the package on npm manually, then attach the GitHub workflow as the trusted publisher:
-
-```bash
-npm publish --access public --provenance=false
-npm trust github emdash-table-of-contents --repo masonjames/emdash-table-of-contents --file publish.yml --yes
-```
-
-If your current npm credential cannot manage trust relationships, keep `NPM_TOKEN` configured in GitHub until you attach the trusted publisher from a full npm account session.
-
-### Ongoing releases
+### Current release flow
 
 1. bump `package.json` and `src/types.ts` to the new version
 2. run `pnpm check`
 3. merge the release commit to `main`
-4. create and push a matching stable tag such as `v0.1.1`
-5. GitHub Actions creates the GitHub Release and publishes to npm via OIDC trusted publishing
+4. create and push a matching stable tag such as `v0.1.4`
+5. the tag push triggers both GitHub Actions workflows:
+   - `Release` creates the GitHub Release
+   - `Publish to npm` publishes the package to npm
+
+The current publish workflow uses the repository `NPM_TOKEN` secret.
+
+### Optional: switch to npm trusted publishing
+
+If you want to replace the token-based publish step with npm trusted publishing, attach the GitHub workflow as the trusted publisher for the package:
+
+```bash
+npm trust github emdash-table-of-contents --repo masonjames/emdash-table-of-contents --file publish.yml --yes
+```
+
+After that is configured and verified, you can remove the `NPM_TOKEN` fallback from the publish workflow.
 
 ## License
 
