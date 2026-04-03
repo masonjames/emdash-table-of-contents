@@ -1,0 +1,9 @@
+---
+import { blockValueToOverrides } from "../config.js";
+import TableOfContents from "./TableOfContents.astro";
+
+const overrides = blockValueToOverrides(Astro.props.value ?? {});
+---
+
+<TableOfContents {...overrides} />
+

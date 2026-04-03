@@ -1,0 +1,135 @@
+---
+import { DEFAULT_PUBLIC_CONFIG, resolveTocConfig } from "../config.js";
+import type { TocInstanceOverrides } from "../types.js";
+
+interface Props extends TocInstanceOverrides {
+	class?: string;
+}
+
+const {
+	class: className = "",
+	title,
+	levels,
+	targetSelector,
+	collapsed,
+	variant,
+	minHeadings,
+	collapseOnMobile,
+	smoothScroll,
+} = Astro.props as Props;
+
+const overrides: TocInstanceOverrides = {
+	title,
+	levels,
+	targetSelector,
+	collapsed,
+	variant,
+	minHeadings,
+	collapseOnMobile,
+	smoothScroll,
+};
+
+const initialConfig = resolveTocConfig(DEFAULT_PUBLIC_CONFIG, overrides);
+const rootClassName = ["emdash-toc", className].filter(Boolean).join(" ");
+---
+
+<nav
+	class={rootClassName}
+	data-emdash-toc-root
+	data-emdash-toc-config={JSON.stringify(overrides)}
+	data-variant={initialConfig.variant}
+	aria-label="Table of contents"
+	hidden
+>
+	<details class="emdash-toc__details" data-emdash-toc-details open>
+		<summary class="emdash-toc__summary">
+			<span class="emdash-toc__summary-text" data-emdash-toc-summary>{initialConfig.title}</span>
+		</summary>
+		<div class="emdash-toc__body" data-emdash-toc-body></div>
+	</details>
+</nav>
+
+<script>
+	import { bootTableOfContents } from "../client.js";
+
+	bootTableOfContents();
+</script>
+
+<style>
+	.emdash-toc {
+		--emdash-toc-radius: 1rem;
+		--emdash-toc-border: rgba(127, 127, 127, 0.25);
+		--emdash-toc-background: rgba(127, 127, 127, 0.08);
+		--emdash-toc-summary-weight: 650;
+		--emdash-toc-link-color: inherit;
+		--emdash-toc-link-hover: currentColor;
+		color: inherit;
+	}
+
+	.emdash-toc__details {
+		border: 1px solid var(--emdash-toc-border);
+		border-radius: var(--emdash-toc-radius);
+		background: var(--emdash-toc-background);
+		padding: 0.85rem 1rem;
+	}
+
+	.emdash-toc[data-variant="plain"] .emdash-toc__details {
+		border: 0;
+		background: transparent;
+		padding: 0;
+	}
+
+	.emdash-toc__summary {
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-weight: var(--emdash-toc-summary-weight);
+		list-style: none;
+	}
+
+	.emdash-toc__summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.emdash-toc__summary::before {
+		content: "▾";
+		display: inline-block;
+		transition: transform 150ms ease;
+	}
+
+	.emdash-toc__details:not([open]) .emdash-toc__summary::before {
+		transform: rotate(-90deg);
+	}
+
+	.emdash-toc__body {
+		margin-top: 0.85rem;
+	}
+
+	.emdash-toc__list {
+		margin: 0;
+		padding-left: 1rem;
+	}
+
+	.emdash-toc__item + .emdash-toc__item {
+		margin-top: 0.4rem;
+	}
+
+	.emdash-toc__sublist {
+		margin-top: 0.4rem;
+		padding-left: 1rem;
+	}
+
+	.emdash-toc__link {
+		color: var(--emdash-toc-link-color);
+		text-decoration: none;
+		text-underline-offset: 0.18em;
+	}
+
+	.emdash-toc__link:hover,
+	.emdash-toc__link:focus-visible {
+		color: var(--emdash-toc-link-hover);
+		text-decoration: underline;
+	}
+	</style>
+
